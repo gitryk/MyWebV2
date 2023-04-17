@@ -2,34 +2,39 @@
 
 Custom WordPress Build for Ubuntu 22.04.2
 
+　　　　　
 
 execute permission for "./runme.sh"
 
 (runme.sh 파일에 실행 권한을 주세요)
 
-
+　　　　　
 
 ex) "chmod +x ./runme.sh"
 
+　　　　　
 
 then execute it.
 
 (그리고 실행하세요)
 
+　　　　　
 
 ???
 
+　　　　　
 
 profit.
 
-
+　　　　　
+     
 ###################################################
 
 For actual use, you need to change the settings in the file(docker-compose.yml).
 
 (일반적인 사용을 위해서는 docker-compose.yml 파일의 수정이 필요합니다.)
 
-
+　　　　　
 
 mariadb container password is written for testing purposes.
 

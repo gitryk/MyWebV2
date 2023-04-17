@@ -1,0 +1,58 @@
+version: '3'
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    ports:
+      - '9000:9000'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - ./portainer:/data'
+
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: unless-stopped
+    environment:
+        MARIADB_DATABASE: wordpress
+        MARIADB_USER: tryk
+        MARIADB_PASSWORD: tryk
+        MARIADB_ROOT_PASSWORD: 1234
+    volumes:
+      - './mariadb/data:/var/lib/mysql'
+
+  php:
+    image: php-custom:v1
+    build:
+      context: ./php/
+    restart: unless-stopped
+    container_name: php-custom
+    depends_on: 
+      - mariadb
+    volumes:
+      - './php/php.ini:/usr/local/etc/php/php.ini'
+      - './www:/var/www/html'
+
+  nginx:
+    image: nginx:mainline-alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - './nginx:/etc/nginx/conf.d'
+      - './www:/var/www/html'
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: unless-stopped
+    volumes:
+      - './redis:/data'
+
+networks:
+  default:
+    external:
+      name: web-service
